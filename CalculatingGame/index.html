@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <title></title>
+</head>
+
+<body>
+
+
+
+  <div id="game">
+    <h1 id="title">Calculating Game</h1>
+    <span id="Number1">0</span>
+    <span id="Operator">*</span>
+    <span id="Number2">0</span>
+    <span>=</span>
+    <input type="text" id="result">
+    <input type="button" id="answer" value="submit">
+    <div style="clear: both;"></div>
+    <div id="True">0</div>
+    <div id="False">0</div>
+    <div style="clear: both;"></div>
+  </div>
+
+  <script>
+    //creating variables 
+    var Number1, Number2, Operator, result, answer, True = 0, False = 0;
+
+    //Finding HTML elements
+    Number1 = document.getElementById('Number1');
+    Number2 = document.getElementById('Number2');
+    Operator = document.getElementById('Operator');
+    result = document.getElementById('result');
+    answer = document.getElementById('answer');
+    True = document.getElementById('True');
+    False = document.getElementById('False');
+
+    //creating random number generation function
+    function RandomNumber(min, max) {
+      var number = Math.floor(Math.random() * (max - min)) + min;
+      return number;
+    }
+
+    
+    //creating new question
+    function newQuestion() {
+      var operation = ["+", "-", "*", "/"];
+      Operator.textContent = operation[RandomNumber(0, 4)];
+      Number1.textContent = RandomNumber(0, 50);
+      Number2.textContent = RandomNumber(0, 50);
+
+      if (Operator.textContent == "/") {
+        while (true) {
+          Number2.textContent = RandomNumber(0, 50);
+          if (Number1.textContent % Number2.textContent == 0) {
+            break;
+          }
+        }
+      }
+
+    }
+    window.onload = function () {
+      newQuestion();
+    }
+    //when click to submit button
+    answer.onclick = function () {
+      var ans, n1, n2;
+      n1 = Number(Number1.textContent);
+      n2 = Number(Number2.textContent);
+      switch (Operator.textContent) {
+        case '+': ans = n1 + n2; break;
+        case '-': ans = n1 - n2; break;
+        case '*': ans = n1 * n2; break;
+        case '/': ans = n1 / n2; break;
+        default: break;
+      }
+      if (result.value == ans) {
+        True.textContent = Number(True.textContent) + 1;
+      }else{
+        False.textContent = Number(False.textContent) + 1;
+      }
+      newQuestion();
+    }
+
+
+
+
+
+  </script>
+</body>
+
+</html>
